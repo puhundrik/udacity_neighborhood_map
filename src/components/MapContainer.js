@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Map, GoogleApiWrapper} from 'google-maps-react';
+import {Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 
 class MapContainer extends Component {
     render() {
@@ -12,7 +12,24 @@ class MapContainer extends Component {
                         lat: 55.7546967,
                         lng: 37.6215215
                     }}
-                />
+                >
+                    {this.props.places.map((place, index) => {
+                        console.log(index);
+                        console.log(place);
+                        return (
+                            <Marker
+                                key={index}
+                                id={index}
+                                title={'1' + index}
+                                name={'1' + index}
+                                position={{
+                                    lat: place.lat,
+                                    lng: place.lng
+                                }}
+                            />
+                        );
+                    })}
+                </Map>
             </div>
         );
     }

@@ -22,6 +22,18 @@ class App extends Component {
     render() {
         return (
             <div className="App">
+                <div class="header">
+                    <a href="#" class="menu-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"></path>
+                        </svg>
+                    </a>
+
+                    <h1 class="header-title">Neighborhood Map</h1>
+                </div>
+                <div class="slide-menu">
+                    
+                </div>
                 <MapContainer
                     places={this.state.places}
                 />

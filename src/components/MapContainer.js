@@ -7,24 +7,24 @@ class MapContainer extends Component {
             <div className="map-container" role="application">
                 <Map
                     google={this.props.google}
-                    zoom={15}
+                    zoom={14}
                     initialCenter={{
-                        lat: 55.7546967,
-                        lng: 37.6215215
+                        lat: 55.75920632539493,
+                        lng: 37.61785223845053
                     }}
+                    style={{width: '100%', height: '100%', position: 'relative'}}
                 >
                     {this.props.places.map((place, index) => {
-                        console.log(index);
                         console.log(place);
                         return (
                             <Marker
-                                key={index}
-                                id={index}
-                                title={'1' + index}
-                                name={'1' + index}
+                                key={place.id}
+                                id={place.id}
+                                title={place.name}
+                                name={place.name}
                                 position={{
-                                    lat: place.lat,
-                                    lng: place.lng
+                                    lat: place.location.lat,
+                                    lng: place.location.lng
                                 }}
                             />
                         );

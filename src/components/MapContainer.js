@@ -4,7 +4,7 @@ import {Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 class MapContainer extends Component {
     render() {
         return (
-            <div className="map-container" role="application">
+            <div className='map-container' role='application'>
                 <Map
                     google={this.props.google}
                     zoom={14}

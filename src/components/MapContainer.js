@@ -60,7 +60,7 @@ class MapContainer extends Component {
                     <InfoWindow
                         marker={this.props.activeMarker}
                         visible={this.props.isVisible}
-                        maxWidth = {400}
+                        maxWidth = {300}
                         onClose = {this.props.onWindowClose}
                     >
                         <div style={{color: '#000'}}>

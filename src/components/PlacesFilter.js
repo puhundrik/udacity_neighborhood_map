@@ -6,12 +6,13 @@ class PlacesFilter extends Component {
         places: PropTypes.array.isRequired,
         query: PropTypes.string.isRequired,
         onFilterChange: PropTypes.func.isRequired,
-        onListClick: PropTypes.func.isRequired
+        onListClick: PropTypes.func.isRequired,
+        slideMenuClasses: PropTypes.array.isRequired
     }
 
     render() {
         return (
-            <div className='slide-menu'>
+            <div className={this.props.slideMenuClasses.join(' ')}>
                 <div className='filter'>
                     <input
                         role = 'searchbox'

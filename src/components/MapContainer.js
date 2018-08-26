@@ -7,7 +7,7 @@ class MapContainer extends Component {
     static propTypes = {
         places: PropTypes.array.isRequired,
         onMarkerClick: PropTypes.func.isRequired,
-        activeMarker: PropTypes.object.isRequired,
+        activeMarker: PropTypes.object,
         isVisible: PropTypes.bool.isRequired,
         selectedPlace: PropTypes.object.isRequired,
         mapCenter: PropTypes.object.isRequired,

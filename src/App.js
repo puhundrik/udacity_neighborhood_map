@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import MapContainer from './components/MapContainer';
 import PlacesFilter from './components/PlacesFilter';
 import escapeRegExp from 'escape-string-regexp';
-
 import './App.css';
+import './hamburger.min.css';
 
 class App extends Component {
     constructor(props) {
@@ -14,7 +14,16 @@ class App extends Component {
             selectedPlace: {},
             activeMarker: {},
             showingInfoWindow: false,
-            mapCenter: {}
+            mapCenter: {},
+            hamburgerIconClasses: [
+                'hamburger',
+                'menu-icon',
+                'hamburger--collapse'
+            ],
+            slideMenuClasses: [
+                'slide-menu',
+                'menu-hidden'
+            ]
         };
         this.markers = [];
 
@@ -70,6 +79,32 @@ class App extends Component {
             });
         }
     }
+    
+    onHamburgerClick = () => {
+        function checkArray(where, what) {
+
+            const classExists = where.indexOf(what);
+            if (classExists >= 0) {
+                where.splice(classExists, 1);
+                //this.setState({hamburgerIconClasses: iconClasses});
+            } else {
+                where.push(what);
+                //this.setState({hamburgerIconClasses: iconClasses});
+            }
+            
+            return where;
+        }
+        console.log('click!');
+        const iconClasses = checkArray(this.state.hamburgerIconClasses, 'is-active');
+        const sliderClasses = checkArray(this.state.slideMenuClasses, 'menu-hidden');
+        //const classExists = iconClasses.indexOf('is-active');
+        console.log(iconClasses);
+        console.log(sliderClasses);
+        this.setState({
+            hamburgerIconClasses: iconClasses,
+            slideMenuClasses: sliderClasses
+        });
+    }
 
     render() {
         let showingPlaces;
@@ -81,20 +116,25 @@ class App extends Component {
         }
 
         return (
-            <div className='App'>
-                <div className='header'>
-                    <a href="#" className='menu-icon'>
-                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
-                            <path d='M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z'></path>
-                        </svg>
-                    </a>
-                    <h1 className='header-title'>London Aquarium Map</h1>
+            <div className = 'App'>
+                <div className = 'header'>
+                    <button
+                        className = {this.state.hamburgerIconClasses.join(' ')}
+                        type='button'
+                        onClick = {this.onHamburgerClick}
+                    >
+                        <span className = 'hamburger-box'>
+                            <span className = 'hamburger-inner'></span>
+                        </span>
+                    </button>  
+                    <h1 className = 'header-title'>London Aquarium Map</h1>
                 </div>
                 <PlacesFilter
                     places = {showingPlaces}
                     query = {this.state.query}
                     onFilterChange = {this.updateQuery}
                     onListClick = {this.onListClick}
+                    slideMenuClasses = {this.state.slideMenuClasses}
                 />
                 <MapContainer
                     places = {showingPlaces}

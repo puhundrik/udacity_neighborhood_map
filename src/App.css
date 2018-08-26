@@ -17,6 +17,7 @@
 .menu-icon {
     float: left;
     color: #fff;
+    margin-left: 15px;
 }
 
 .menu-icon svg {
@@ -76,4 +77,21 @@
 
 .places-list li:hover {
     background-color: #4d7c4f;
+}
+
+.info-place-name {
+    font-size: 2em;
+    margin: 0.5em;
+}
+
+.info-place-address {
+    font-size: 1em;
+    font-style: italic;
+    padding: 5px;
+}
+
+.foursquare-logo {
+    height: 12px;
+    right: 0px;
+    padding: 10px;
 }

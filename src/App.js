@@ -9,7 +9,11 @@ class App extends Component {
         super(props);
         this.state = {
             places: [],
-            query: ''
+            query: '',
+            selectedPlace: {},
+            activeMarker: {},
+            showingInfoWindow: false,
+            mapCenter: {}
         };
     }
 
@@ -33,6 +37,28 @@ class App extends Component {
     clearQuery = () => {
         this.setState({ query: '' })
     }
+
+    onMarkerClick = (props, marker, e) => {
+        console.log('marker');
+        console.log(marker);
+        console.log(props);
+        this.setState({
+            selectedPlace: props,
+            activeMarker: marker,
+            showingInfoWindow: true,
+            mapCenter: {lat: props.position.lat, lng: props.position.lng}
+        });
+    }
+    
+    onMapClick = (props) => {
+        console.log('Map');
+        if (this.state.showingInfoWindow) {
+            this.setState({
+                showingInfoWindow: false,
+                activeMarker: null
+            });
+        }
+    };
 
     render() {
         let showingPlaces;
@@ -60,6 +86,12 @@ class App extends Component {
                 />
                 <MapContainer
                     places = {showingPlaces}
+                    onMarkerClick = {this.onMarkerClick}
+                    onMapClick = {this.onMapClick}
+                    activeMarker = {this.state.activeMarker}
+                    isVisible = {this.state.showingInfoWindow}
+                    selectedPlace = {this.state.selectedPlace}
+                    mapCenter = {this.state.mapCenter}
                 />
             </div>
         );

@@ -49,9 +49,6 @@ class App extends Component {
     }
 
     onMarkerClick = (props, marker, e) => {
-        console.log('marker');
-        console.log(marker);
-        console.log(props);
         this.setState({
             selectedPlace: props,
             activeMarker: marker,
@@ -60,23 +57,21 @@ class App extends Component {
         });
     }
 
-    onMapClick = (props) => {
-        console.log('Map');
+    onListClick = (event) => {
+        const activeMarker = this.markers.find((m) => m.marker.id === event.currentTarget.getAttribute('data-id'));
+        new window.google.maps.event.trigger( activeMarker.marker, 'click' );
+    };
+    
+    onInfoWindowClose = () => {
         if (this.state.showingInfoWindow) {
             this.setState({
                 showingInfoWindow: false,
                 activeMarker: null
             });
         }
-    };
-
-    onListClick = (event) => {
-        const activeMarker = this.markers.find((m) => m.marker.id === event.currentTarget.getAttribute('data-id'));
-        new window.google.maps.event.trigger( activeMarker.marker, 'click' );
-    };
+    }
 
     render() {
-        //console.log(this.state.markers);
         let showingPlaces;
         if (this.state.query) {
             const match = new RegExp(escapeRegExp(this.state.query), 'i')
@@ -104,13 +99,12 @@ class App extends Component {
                 <MapContainer
                     places = {showingPlaces}
                     onMarkerClick = {this.onMarkerClick}
-                    onMapClick = {this.onMapClick}
                     activeMarker = {this.state.activeMarker}
                     isVisible = {this.state.showingInfoWindow}
                     selectedPlace = {this.state.selectedPlace}
                     mapCenter = {this.state.mapCenter}
                     onRef = {this.onMarkerMounted}
-                    
+                    onWindowClose = {this.onInfoWindowClose}
                 />
             </div>
         );

@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import MapContainer from './components/MapContainer';
 import PlacesFilter from './components/PlacesFilter';
 import escapeRegExp from 'escape-string-regexp';
+import Alert from 'react-s-alert';
 import './App.css';
 import './hamburger.min.css';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/stackslide.css';
 
 class App extends Component {
     constructor(props) {
@@ -48,6 +51,18 @@ class App extends Component {
         .then((respJson) => {
             this.setState({places: respJson.response.venues})
         })
+        .catch((error) => {
+            Alert.error('Fetch Foursquare API failed! Try to reload the page.', {
+                position: 'top-right',
+                effect: 'stackslide',
+                beep: false,
+                timeout: 'none',
+                offset: 100
+            });
+            console.log('Foursquare API fetch error: ' + error.message);
+        });
+
+        this.checkGoogleMapsError();
     }
 
     updateQuery = (query) => {
@@ -59,13 +74,13 @@ class App extends Component {
     }
 
     onMarkerClick = (props, marker, e) => {
-        if (this.state.activeMarker.title === marker.title) return; // Do not change state if not necessary.
+        if (this.state.activeMarker && this.state.activeMarker.title === marker.title) return; // Do not change state if not necessary.
 
         this.setState({
             selectedPlace: props,
             activeMarker: marker,
             showingInfoWindow: true,
-            mapCenter: {lat: props.position.lat, lng: props.position.lng}
+            mapCenter: {lat: props.position.lat + 0.1, lng: props.position.lng}
         });
     }
 
@@ -85,6 +100,7 @@ class App extends Component {
     }
 
     onHamburgerClick = () => {
+        
         function checkArray(where, what) {
             const classExists = where.indexOf(what);
             if (classExists >= 0) {
@@ -107,6 +123,23 @@ class App extends Component {
             slideMenuClasses: sliderClasses,
             tabAble: !tabAble
         });
+    }
+    
+    // Google Map is not loading
+    checkGoogleMapsError = () => {
+        setTimeout(() => {
+            const gmErrMessage = document.querySelector('.gm-err-message');
+
+            if (gmErrMessage && gmErrMessage.innerText.length > 0) {
+                Alert.error('Google Maps has errors while loading. Check console for details', {
+                    position: 'top-right',
+                    effect: 'stackslide',
+                    beep: false,
+                    timeout: 'none',
+                    offset: 100
+                });
+            }
+        }, 3000);
     }
 
     render() {
@@ -135,6 +168,7 @@ class App extends Component {
                     </button>  
                     <h1 className = 'header-title'>London Aquarium Map</h1>
                 </nav>
+                <Alert stack = {{limit: 5}} />
                 <PlacesFilter
                     places = {showingPlaces}
                     query = {this.state.query}

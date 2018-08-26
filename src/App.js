@@ -15,6 +15,16 @@ class App extends Component {
             showingInfoWindow: false,
             mapCenter: {}
         };
+        this.markers = [];
+
+       this.onMarkerMounted = (element) => {
+           if (element) {
+               const markerExists = this.markers.find((m) => m.marker.id === element.marker.id);
+                if(markerExists == null) {
+                    this.markers.push(element);
+                }
+           }
+       };
     }
 
     componentDidMount() {
@@ -49,7 +59,7 @@ class App extends Component {
             mapCenter: {lat: props.position.lat, lng: props.position.lng}
         });
     }
-    
+
     onMapClick = (props) => {
         console.log('Map');
         if (this.state.showingInfoWindow) {
@@ -60,7 +70,13 @@ class App extends Component {
         }
     };
 
+    onListClick = (event) => {
+        const activeMarker = this.markers.find((m) => m.marker.id === event.currentTarget.getAttribute('data-id'));
+        new window.google.maps.event.trigger( activeMarker.marker, 'click' );
+    };
+
     render() {
+        //console.log(this.state.markers);
         let showingPlaces;
         if (this.state.query) {
             const match = new RegExp(escapeRegExp(this.state.query), 'i')
@@ -83,6 +99,7 @@ class App extends Component {
                     places = {showingPlaces}
                     query = {this.state.query}
                     onFilterChange = {this.updateQuery}
+                    onListClick = {this.onListClick}
                 />
                 <MapContainer
                     places = {showingPlaces}
@@ -92,6 +109,8 @@ class App extends Component {
                     isVisible = {this.state.showingInfoWindow}
                     selectedPlace = {this.state.selectedPlace}
                     mapCenter = {this.state.mapCenter}
+                    onRef = {this.onMarkerMounted}
+                    
                 />
             </div>
         );

@@ -29,6 +29,7 @@ class MapContainer extends Component {
                             <Marker
                                 key={place.id}
                                 id={place.id}
+                                ref={this.props.onRef}
                                 title={place.name}
                                 name={place.name}
                                 position={{
@@ -41,7 +42,7 @@ class MapContainer extends Component {
                             />
                         );
                     })}
-                    
+
                     <InfoWindow
                         marker={this.props.activeMarker}
                         visible={this.props.isVisible}

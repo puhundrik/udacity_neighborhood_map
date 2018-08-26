@@ -18,6 +18,8 @@ class PlacesFilter extends Component {
                     {this.props.places.map((place) => (
                             <li
                                 key={place.id}
+                                data-id={place.id}
+                                onClick = {this.props.onListClick}
                             >
                                 {place.name}
                             </li>

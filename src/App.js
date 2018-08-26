@@ -23,7 +23,8 @@ class App extends Component {
             slideMenuClasses: [
                 'slide-menu',
                 'menu-hidden'
-            ]
+            ],
+            tabAble: false
         };
         this.markers = [];
 
@@ -58,6 +59,8 @@ class App extends Component {
     }
 
     onMarkerClick = (props, marker, e) => {
+        if (this.state.activeMarker.title === marker.title) return; // Do not change state if not necessary.
+
         this.setState({
             selectedPlace: props,
             activeMarker: marker,
@@ -67,10 +70,11 @@ class App extends Component {
     }
 
     onListClick = (event) => {
+        if (event.key !== 'Enter') return;
         const activeMarker = this.markers.find((m) => m.marker.id === event.currentTarget.getAttribute('data-id'));
         new window.google.maps.event.trigger( activeMarker.marker, 'click' );
     };
-    
+
     onInfoWindowClose = () => {
         if (this.state.showingInfoWindow) {
             this.setState({
@@ -79,30 +83,29 @@ class App extends Component {
             });
         }
     }
-    
+
     onHamburgerClick = () => {
         function checkArray(where, what) {
-
             const classExists = where.indexOf(what);
             if (classExists >= 0) {
                 where.splice(classExists, 1);
-                //this.setState({hamburgerIconClasses: iconClasses});
             } else {
                 where.push(what);
-                //this.setState({hamburgerIconClasses: iconClasses});
             }
-            
+
             return where;
         }
-        console.log('click!');
+
         const iconClasses = checkArray(this.state.hamburgerIconClasses, 'is-active');
         const sliderClasses = checkArray(this.state.slideMenuClasses, 'menu-hidden');
-        //const classExists = iconClasses.indexOf('is-active');
-        console.log(iconClasses);
-        console.log(sliderClasses);
+        const tabAble = this.state.tabAble;
+        if (tabAble) {
+            this.clearQuery();
+        }
         this.setState({
             hamburgerIconClasses: iconClasses,
-            slideMenuClasses: sliderClasses
+            slideMenuClasses: sliderClasses,
+            tabAble: !tabAble
         });
     }
 
@@ -117,9 +120,12 @@ class App extends Component {
 
         return (
             <div className = 'App'>
-                <div className = 'header'>
+                <nav className = 'header'>
                     <button
                         className = {this.state.hamburgerIconClasses.join(' ')}
+                        aria-label = 'Filter Places Menu'
+                        aria-controls='navigation'
+                        aria-expanded={this.state.tabAble}
                         type='button'
                         onClick = {this.onHamburgerClick}
                     >
@@ -128,13 +134,14 @@ class App extends Component {
                         </span>
                     </button>  
                     <h1 className = 'header-title'>London Aquarium Map</h1>
-                </div>
+                </nav>
                 <PlacesFilter
                     places = {showingPlaces}
                     query = {this.state.query}
                     onFilterChange = {this.updateQuery}
                     onListClick = {this.onListClick}
                     slideMenuClasses = {this.state.slideMenuClasses}
+                    tabAble = {this.state.tabAble}
                 />
                 <MapContainer
                     places = {showingPlaces}

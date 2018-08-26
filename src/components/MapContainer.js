@@ -52,6 +52,7 @@ class MapContainer extends Component {
                                 address = {address}
                                 onClick={this.props.onMarkerClick}
                                 animation={this.props.activeMarker ? (place.name === this.props.activeMarker.title ? '1' : '0') : '0'}
+                                
                             />
                         );
                     })}
@@ -63,10 +64,27 @@ class MapContainer extends Component {
                         onClose = {this.props.onWindowClose}
                     >
                         <div style={{color: '#000'}}>
-                            <p className = 'info-place-name'>{this.props.selectedPlace.name}</p>
-                            <p className = 'info-place-address'>{this.props.selectedPlace.address}</p>
-                            <a href={'http://foursquare.com/v/' + this.props.selectedPlace.id} className='menu-icon'>
-                                <img className='foursquare-logo' src={fslogo} alt='foursquare logo'/>
+                            <p
+                                tabIndex = '0'
+                                className = 'info-place-name'
+                                aria-label = {'Place Name ' + this.props.selectedPlace.name}
+                            >
+                                {this.props.selectedPlace.name}
+                            </p>
+                            <p
+                                tabIndex = '0'
+                                className = 'info-place-address'
+                                aria-label = {'Place Address ' + this.props.selectedPlace.address}
+                            >
+                                {this.props.selectedPlace.address}
+                            </p>
+                            <a
+                                tabIndex = '0'
+                                aria-label = 'Look for details at Foursquare.com'
+                                href={'http://foursquare.com/v/' + this.props.selectedPlace.id}
+                                className='menu-icon'
+                            >
+                                <img tabIndex = {'-1'} className='foursquare-logo' src={fslogo} alt='foursquare logo'/>
                             </a>
                         </div>
                     </InfoWindow>

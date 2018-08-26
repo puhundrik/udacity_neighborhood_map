@@ -32,6 +32,7 @@ class MapContainer extends Component {
                                 ref={this.props.onRef}
                                 title={place.name}
                                 name={place.name}
+                                icon = 'http://maps.google.com/mapfiles/ms/icons/flag.png'
                                 position={{
                                     lat: place.location.lat,
                                     lng: place.location.lng

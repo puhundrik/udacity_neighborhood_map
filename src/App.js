@@ -18,7 +18,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        fetch('https://api.foursquare.com/v2/venues/search?limit=50&near=Moscow&query=theatre&radius=10000&locale=en&client_id=3SLN3KVWQ4IV0B1HFKHEM2NOPRFOEVRAPCVHWIZONBZR5R2F&client_secret=JQOW54G1RO0AQV30MZGASVT2JF3GOH4ZB40J3O01RVP2JSGP&v=20180825', {
+        fetch('https://api.foursquare.com/v2/venues/search?limit=50&near=London&categoryId=4fceea171983d5d06c3e9823&radius=50000&locale=en&client_id=3SLN3KVWQ4IV0B1HFKHEM2NOPRFOEVRAPCVHWIZONBZR5R2F&client_secret=JQOW54G1RO0AQV30MZGASVT2JF3GOH4ZB40J3O01RVP2JSGP&v=20180825', {
             headers: {
                 "Accept-Language": "en"
             }
@@ -77,7 +77,7 @@ class App extends Component {
                             <path d='M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z'></path>
                         </svg>
                     </a>
-                    <h1 className='header-title'>Moscow Theaters Map</h1>
+                    <h1 className='header-title'>London Aquarium Map</h1>
                 </div>
                 <PlacesFilter
                     places = {showingPlaces}

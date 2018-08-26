@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class PlacesFilter extends Component {
+    static propTypes = {
+        places: PropTypes.array.isRequired,
+        query: PropTypes.string.isRequired,
+        onFilterChange: PropTypes.func.isRequired,
+        onListClick: PropTypes.func.isRequired
+    }
+
     render() {
         return (
             <div className='slide-menu'>

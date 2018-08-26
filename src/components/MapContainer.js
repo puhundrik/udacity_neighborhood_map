@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
 import {Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react';
+import PropTypes from 'prop-types';
 import fslogo from './../foursquare.svg';
 
 class MapContainer extends Component {
+    static propTypes = {
+        places: PropTypes.array.isRequired,
+        onMarkerClick: PropTypes.func.isRequired,
+        activeMarker: PropTypes.object.isRequired,
+        isVisible: PropTypes.bool.isRequired,
+        selectedPlace: PropTypes.object.isRequired,
+        mapCenter: PropTypes.object.isRequired,
+        onRef: PropTypes.func.isRequired,
+        onWindowClose: PropTypes.func.isRequired
+    }
+
     render() {
         return (
             <div className='map-container' role='application'>
@@ -15,7 +27,7 @@ class MapContainer extends Component {
                     }}
                     center = {this.props.mapCenter}
                     style={{width: '100%', height: '100%', position: 'relative'}}
-                    onClick={this.props.onMapClick}
+                    onClick={this.props.onWindowClose}
                 >
                     {this.props.places.map((place, index) => {
                         let address = '';
@@ -48,6 +60,7 @@ class MapContainer extends Component {
                         marker={this.props.activeMarker}
                         visible={this.props.isVisible}
                         maxWidth = {400}
+                        onClose = {this.props.onWindowClose}
                     >
                         <div style={{color: '#000'}}>
                             <p className = 'info-place-name'>{this.props.selectedPlace.name}</p>

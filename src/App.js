@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MapContainer from './components/MapContainer';
 import PlacesFilter from './components/PlacesFilter';
 import escapeRegExp from 'escape-string-regexp';
+
 import './App.css';
 
 class App extends Component {
@@ -35,7 +36,6 @@ class App extends Component {
         })
         .then((response) => response.json())
         .then((respJson) => {
-            console.log(respJson.response.venues);
             this.setState({places: respJson.response.venues})
         })
     }

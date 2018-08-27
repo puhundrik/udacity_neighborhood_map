@@ -10,7 +10,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 * [Code Dependencies](#code-dependencies)
 * [How to Install](#how-to-install)
-* [Try App Online](try-app-online)
+* [Try App Online](#try-app-online)
 * [Contributing](#contributing)
 
 ## Code Dependencies

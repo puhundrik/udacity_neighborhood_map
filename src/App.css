@@ -1,7 +1,9 @@
+/* Global styles */
 .App {
   text-align: center;
 }
 
+/* App Header */
 .header {
     background: #4caf50;
     color: #fff;
@@ -14,6 +16,7 @@
 
 }
 
+/* Slide menu styles */
 .menu-icon {
     float: left;
     margin-left: 15px;
@@ -42,11 +45,6 @@
 .menu-hidden {
     transform: translate3d(-25em, 0, 0);
     transition: transform 0.2s;
-}
-
-.map-container {
-    width: 100%;
-    height: calc(100% - 55px);
 }
 
 .filter-places {
@@ -80,6 +78,13 @@
     background-color: #4d7c4f;
 }
 
+/* Google Maps container */
+.map-container {
+    width: 100%;
+    height: calc(100% - 55px);
+}
+
+/* InfoWindow styles */
 .info-place-name {
     font-size: 2em;
     margin: 0.5em;
@@ -97,6 +102,7 @@
     padding: 10px;
 }
 
+/* Responsive media queries */
 @media screen and (min-width: 449px) {
     .header-title {
         margin: 0.2em 0;

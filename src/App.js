@@ -8,7 +8,12 @@ import './hamburger.min.css';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/stackslide.css';
 
+/** Main app component */
 class App extends Component {
+    /**
+     * Component constructor
+     * @param {Object} props
+     */
     constructor(props) {
         super(props);
         this.state = {
@@ -27,20 +32,28 @@ class App extends Component {
                 'slide-menu',
                 'menu-hidden'
             ],
-            tabAble: false
+            tabAble: false // Used for a11y handling
         };
         this.markers = [];
 
-       this.onMarkerMounted = (element) => {
-           if (element) {
-               const markerExists = this.markers.find((m) => m.marker.id === element.marker.id);
+        /**
+         * Create reference to Marker
+         * @param {Object} element
+         */
+        this.onMarkerMounted = (element) => {
+            if (element) {
+                const markerExists = this.markers.find((m) => m.marker.id === element.marker.id);
                 if(markerExists == null) {
                     this.markers.push(element);
                 }
-           }
-       };
+            }
+        };
     }
 
+    /**
+     * Set state after component is mounted.
+     * Fetches Foursquare venues and handles some errors
+     */
     componentDidMount() {
         fetch('https://api.foursquare.com/v2/venues/search?limit=50&near=London&categoryId=4fceea171983d5d06c3e9823&radius=50000&locale=en&client_id=3SLN3KVWQ4IV0B1HFKHEM2NOPRFOEVRAPCVHWIZONBZR5R2F&client_secret=JQOW54G1RO0AQV30MZGASVT2JF3GOH4ZB40J3O01RVP2JSGP&v=20180825', {
             headers: {
@@ -52,6 +65,7 @@ class App extends Component {
             this.setState({places: respJson.response.venues})
         })
         .catch((error) => {
+            // Show alertbox to user
             Alert.error('Fetch Foursquare API failed! Try to reload the page.', {
                 position: 'top-right',
                 effect: 'stackslide',
@@ -65,16 +79,29 @@ class App extends Component {
         this.checkGoogleMapsError();
     }
 
+    /**
+     * Updates search query in state
+     * @param {string} query - The search string
+     */
     updateQuery = (query) => {
         this.setState({ query: query.trim() })
     }
 
+    /**
+     * Clears search query in state
+     */
     clearQuery = () => {
         this.setState({ query: '' })
     }
 
+    /**
+     * Handles Marker click event
+     * @param {Object} props - Marker props
+     * @param {Object} marker - Marker component
+     * @param {Event} e - Click event
+     */
     onMarkerClick = (props, marker, e) => {
-        if (this.state.activeMarker && this.state.activeMarker.title === marker.title) return; // Do not change state if not necessary.
+        if (this.state.activeMarker && this.state.activeMarker.title === marker.title) return; // Do not change the state if not necessary.
 
         this.setState({
             selectedPlace: props,
@@ -84,12 +111,19 @@ class App extends Component {
         });
     }
 
+    /**
+     * Handles places list click event
+     * @param {Event} event
+     */
     onListClick = (event) => {
         if (event.key && event.key !== 'Enter') return;
         const activeMarker = this.markers.find((m) => m.marker.id === event.currentTarget.getAttribute('data-id'));
         new window.google.maps.event.trigger( activeMarker.marker, 'click' );
     };
 
+    /**
+     * Callback for InfoWindow onClose event
+     */
     onInfoWindowClose = () => {
         if (this.state.showingInfoWindow) {
             this.setState({
@@ -99,8 +133,16 @@ class App extends Component {
         }
     }
 
+    /**
+     * Slide menu handler
+     */
     onHamburgerClick = () => {
-        
+        /**
+         * Inverts item existance in given array
+         * @param {Array} where - Where to search
+         * @param {String} what - Item to search
+         * @returns {Array} - Returns modified array
+         */
         function checkArray(where, what) {
             const classExists = where.indexOf(what);
             if (classExists >= 0) {
@@ -116,7 +158,7 @@ class App extends Component {
         const sliderClasses = checkArray(this.state.slideMenuClasses, 'menu-hidden');
         const tabAble = this.state.tabAble;
         if (tabAble) {
-            this.clearQuery();
+            this.clearQuery(); // Clear query when slide menu is closed
         }
         this.setState({
             hamburgerIconClasses: iconClasses,
@@ -125,7 +167,9 @@ class App extends Component {
         });
     }
     
-    // Google Map is not loading
+    /**
+     * Check if Google Maps API has errors
+     */
     checkGoogleMapsError = () => {
         setTimeout(() => {
             const gmErrMessage = document.querySelector('.gm-err-message');
@@ -143,13 +187,16 @@ class App extends Component {
         }, 3000);
     }
 
+    /**
+     * Renders the component
+     */
     render() {
         let showingPlaces;
         if (this.state.query) {
-            const match = new RegExp(escapeRegExp(this.state.query), 'i')
-            showingPlaces = this.state.places.filter((place) => match.test(place.name))
+            const match = new RegExp(escapeRegExp(this.state.query), 'i'); // Filter places using query string
+            showingPlaces = this.state.places.filter((place) => match.test(place.name));
         } else {
-            showingPlaces = this.state.places
+            showingPlaces = this.state.places;
         }
 
         return (
@@ -158,9 +205,9 @@ class App extends Component {
                     <button
                         className = {this.state.hamburgerIconClasses.join(' ')}
                         aria-label = 'Filter Places Menu'
-                        aria-controls='navigation'
-                        aria-expanded={this.state.tabAble}
-                        type='button'
+                        aria-controls = 'navigation'
+                        aria-expanded = {this.state.tabAble}
+                        type = 'button'
                         onClick = {this.onHamburgerClick}
                     >
                         <span className = 'hamburger-box'>

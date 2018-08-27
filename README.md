@@ -10,6 +10,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 * [Code Dependencies](#code-dependencies)
 * [How to Install](#how-to-install)
+* [Production Build](#production-build)
 * [Try App Online](#try-app-online)
 * [License](#license)
 * [Contributing](#contributing)
@@ -51,6 +52,18 @@ npm start
 ```
 
 The web-page should open in your default browser.
+
+## Production Build
+
+To run the app in production mode, please, follow these steps:
+After installing the App run the following commands in terminal window from the folder with the project files:
+
+```
+npm install -g serve
+npm run build
+serve -s build
+```
+Open this link in your favourite browser: [http://localhost:5000](http://localhost:5000).
 
 ## Try App Online
 

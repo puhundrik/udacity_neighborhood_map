@@ -129,8 +129,9 @@ class App extends Component {
     checkGoogleMapsError = () => {
         setTimeout(() => {
             const gmErrMessage = document.querySelector('.gm-err-message');
+            const gmContainer = document.querySelector('.map-container');
 
-            if (gmErrMessage && gmErrMessage.innerText.length > 0) {
+            if ((gmErrMessage && gmErrMessage.innerText.length > 0) || !gmContainer) {
                 Alert.error('Google Maps has errors while loading. Check console for details', {
                     position: 'top-right',
                     effect: 'stackslide',

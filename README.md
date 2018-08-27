@@ -11,6 +11,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * [Code Dependencies](#code-dependencies)
 * [How to Install](#how-to-install)
 * [Try App Online](#try-app-online)
+* [License](#license)
 * [Contributing](#contributing)
 
 ## Code Dependencies
@@ -48,6 +49,7 @@ To start the project in development enviroment run this command from the folder 
 ```
 npm start
 ```
+
 The web-page should open in your default browser.
 
 ## Try App Online

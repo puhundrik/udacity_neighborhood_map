@@ -85,7 +85,7 @@ class App extends Component {
     }
 
     onListClick = (event) => {
-        if (event.key !== 'Enter') return;
+        if (event.key && event.key !== 'Enter') return;
         const activeMarker = this.markers.find((m) => m.marker.id === event.currentTarget.getAttribute('data-id'));
         new window.google.maps.event.trigger( activeMarker.marker, 'click' );
     };
